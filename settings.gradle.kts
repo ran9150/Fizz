@@ -12,6 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-rootProject.name = "DevWorkspaceApp"
+rootProject.name = "PulseTask"
 include(":app")
