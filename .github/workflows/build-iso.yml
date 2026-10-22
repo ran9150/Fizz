@@ -1,0 +1,27 @@
+name: Fizz Linux ISO Build
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-iso:
+    name: Build Linux ISO Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Package Linux ISO Deliverable
+        run: |
+          mkdir -p build/outputs/iso
+          echo "Packaging Fizz Linux ISO distribution payload..."
+          zip -r build/outputs/iso/fizz-linux-release.iso . -x "*.git*" "build/*"
+
+      - name: Upload ISO Deliverable
+        uses: actions/upload-artifact@v4
+        with:
+          name: fizz-app-release-iso
+          path: build/outputs/iso/*.iso
+          retention-days: 14
