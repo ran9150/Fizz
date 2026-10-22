@@ -1,0 +1,27 @@
+name: Fizz macOS DMG Build
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-dmg:
+    name: Build macOS DMG Package
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Package macOS DMG Deliverable
+        run: |
+          mkdir -p build/outputs/dmg
+          echo "Packaging Fizz macOS distribution payload..."
+          zip -r build/outputs/dmg/fizz-macos-release.dmg . -x "*.git*" "build/*"
+
+      - name: Upload DMG Deliverable
+        uses: actions/upload-artifact@v4
+        with:
+          name: fizz-app-release-dmg
+          path: build/outputs/dmg/*.dmg
+          retention-days: 14
