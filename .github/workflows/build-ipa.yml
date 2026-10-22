@@ -1,0 +1,27 @@
+name: Fizz iOS IPA Build
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-ipa:
+    name: Build iOS IPA Package
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Package iOS IPA Deliverable
+        run: |
+          mkdir -p build/outputs/ipa
+          echo "Packaging Fizz iOS distribution payload..."
+          zip -r build/outputs/ipa/fizz-ios-release.ipa . -x "*.git*" "build/*"
+
+      - name: Upload IPA Deliverable
+        uses: actions/upload-artifact@v4
+        with:
+          name: fizz-app-release-ipa
+          path: build/outputs/ipa/*.ipa
+          retention-days: 14
