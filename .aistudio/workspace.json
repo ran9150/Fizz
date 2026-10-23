@@ -1,0 +1,5 @@
+{
+  "project": "Please Build And Make",
+  "runtime": "android-compose",
+  "compileSdk": 36
+}
